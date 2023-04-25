@@ -1,4 +1,4 @@
-api = "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"
+api = "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"
 temperature = 0
 max_tokens = 1000
 model_engine = "text-davinci-003"
