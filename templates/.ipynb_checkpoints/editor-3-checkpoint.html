@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Editable Text Box</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <style>
+        textarea {
+            display: inline-block;
+            width: 400px;
+            height: 200px;
+            padding: 10px;
+            margin: 10px;
+        }
+    .centered {
+      text-align: center;
+    }
+    h1 {
+      text-align: center;
+    }
+    
+    textarea {
+      width: 100%;
+      height: 300px;
+    }
+  </style>
+  
+</head>
+<body>
+
+    <h1 style="color:black;">Here is your Output Editor</h1><br>
+  
+    <div class="centered">
+<!--       change it later if the number or name of button changes -->
+      <button id="commodityb" onclick="highlightText('commodity')">Commodity</button>
+      <button id="varietyb" onclick="highlightText('variety')">Variety</button>
+      <button id="locationb" onclick="highlightText('location')">Location</button>
+      <button id="buyerb" onclick="highlightText('buyer')">Buyer</button>
+      <button id="priceb" onclick="highlightText('price')">Price</button>
+      <button id="quantityb" onclick="highlightText('quantity')">Quantity</button>
+    </div><br>
+
+    <div style="display:flex; flex-direction:row; justify-content:center;">
+        <div style="display:flex; flex-direction:column; align-items:center; margin-right:20px;">
+            <h3>Raw Text</h3>
+            <textarea rows="20" cols="60" id="textbox1" placeholder="Click load example for raw text"></textarea>
+            
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <h3>Json Output</h3>
+            <textarea rows="20" cols="60" id="textbox2" placeholder="Click load example for response object"></textarea>
+        </div>
+    </div><br>
+  
+    <div class="centered">
+      <input type="text" size="20" id="idbox" class="center" placeholder="index" readonly>
+    </div><br>
+  
+    <div class="centered">
+<!--       change this if the name and the number of button changes -->
+      <p><input type='text' id='commodity' placeholder="commodity"> of variety <input type='text' id='variety' placeholder="variety"> - at <input type='text' id='location' placeholder="location"> by <input type='text' id='buyer' placeholder="buyer"> at price <input type='text' id='price' placeholder="price"> and quantity <input type='text' id='quantity' placeholder="quantity">
+    </div><br>
+  
+    <div class="centered">
+      <button onclick="handleClick()">Load Example</button>
+      <button onclick="handleClick4()">Save Row</button>
+      <button onclick="handleClick2()">Save Example</button>
+      <button onclick="handleClick3()">Save Data</button>
+    </div><br>
+
+  <script>
+        function handleClick() {
+                let textbox1 = document.getElementById("textbox1");
+                let textbox2 = document.getElementById("textbox2");
+                let textbox3 = document.getElementById("idbox");
+                fetch('/load_example')
+                    .then(response => response.json())
+                    .then(message => {
+                          textbox1.value = message.output1;
+                          textbox2.value = JSON.stringify(message.output2, null, 3);
+                          textbox3.value = message.output3;
+                    })
+            }
+    
+		function handleClick2() {
+			let textbox = document.getElementById("idbox");
+            let textbox4 = document.getElementById("textbox2");
+            let textbox5 = document.getElementById("textbox1");
+            // let data = textbox.value;
+            let data = {id: textbox.value, text:textbox4.value};
+                fetch('/save_example',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+        // Clear the second textarea if the request was successful
+        if (response.ok) {
+          textbox4.value = "";
+          textbox5.value = "";
+          textbox.value = "";
+        }
+      });
+		}
+        
+        function handleClick4() {
+                // write the name of the buttons below the text boxes
+                let inputValue1 = document.getElementById("commodity").value;
+                let inputValue2 = document.getElementById("variety").value;
+                let inputValue3 = document.getElementById("location").value;
+                let inputValue4 = document.getElementById("buyer").value;
+                let inputValue5 = document.getElementById("price").value;
+                let inputValue6 = document.getElementById("quantity").value;
+          
+                // change this if the name and the number of text box/ button changes
+                let data = {
+                      "commodity": inputValue1,
+                      "variety": inputValue2,
+                      "location": inputValue3,
+                      "buyer": inputValue4,
+                      "price": inputValue5,
+                      "quantity": inputValue6
+                    };
+                fetch('/save_row',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                  // Parse the response JSON and display it on the output box
+                  response.json().then(data => {
+                    // document.getElementById('textbox2').value = JSON.stringify(data);
+                    // textBox.value = data;
+                    const text = document.getElementById('textbox2');
+                    if (text.value) {
+                      text.value += ",\n" + JSON.stringify(data);
+                    } else {
+                      text.value = JSON.stringify(data);
+                    }
+                    }
+				);
+                })
+                .catch(error => {
+                  console.error('Error sending data:', error);
+                });
+                // .finally(() => {
+                //   // change this of the name and the number of textbox/button changes
+                //   // Clear the input box value after sending the data
+                //   document.getElementById('commodity').value = '';
+                //   document.getElementById('variety').value = '';
+                //   document.getElementById('location').value = '';
+                //   document.getElementById('buyer').value = '';
+                //   document.getElementById('price').value = '';
+                //   document.getElementById('quantity').value = '';
+                // });
+              }
+        
+		function handleClick3() {
+			fetch('/save_data')
+				.then(response => response.text())
+				.then(data => {
+					alert(data);
+				});
+		}
+        
+        function highlightText(inputBoxId) {
+            // Get the user's selected text
+            let selectedText = window.getSelection().toString();
+
+            // Set the value of the second input box to the selected text
+            document.getElementById(inputBoxId).value = selectedText;
+                }
+  </script>
+
+</body>
+</html>
