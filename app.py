@@ -21,40 +21,40 @@ from constants import (
 )
 
 
-def get_gpt_output(string, api, model_engine, temperature, max_tokens, prompt):
-    """
-    This function returns the output of the chatgpt for a given sentence of i-grain
+# def get_gpt_output(string, api, model_engine, temperature, max_tokens, prompt):
+#     """
+#     This function returns the output of the chatgpt for a given sentence of i-grain
 
-    Input: String of message
-    Output: response in a predefined template
-    """
-    # Replace YOUR_API_KEY with your OpenAI API key
-    openai.api_key = api
+#     Input: String of message
+#     Output: response in a predefined template
+#     """
+#     # Replace YOUR_API_KEY with your OpenAI API key
+#     openai.api_key = api
 
-    # Replace the text with the input you want to process
-    input_text = string
+#     # Replace the text with the input you want to process
+#     input_text = string
 
-    # Replace the model and parameters with the ones you want to use
-    # model_engine = "text-davinci-003"
-    prompt = prompt
-    temperature = temperature
-    max_tokens = max_tokens
-    model_engine = model_engine
+#     # Replace the model and parameters with the ones you want to use
+#     # model_engine = "text-davinci-003"
+#     prompt = prompt
+#     temperature = temperature
+#     max_tokens = max_tokens
+#     model_engine = model_engine
 
-    # Call the ChatGPT model and get the response
-    response = openai.Completion.create(
-        engine=model_engine,
-        prompt=input_text + "/n/n" + prompt,
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
+#     # Call the ChatGPT model and get the response
+#     response = openai.Completion.create(
+#         engine=model_engine,
+#         prompt=input_text + "/n/n" + prompt,
+#         temperature=temperature,
+#         max_tokens=max_tokens,
+#     )
 
-    # Parse the response to get the extracted information
-    output_text = response.choices[0].text
-    # output_dict = json.loads(output_text)
+#     # Parse the response to get the extracted information
+#     output_text = response.choices[0].text
+#     # output_dict = json.loads(output_text)
 
-    # Print the output in JSON format
-    return output_text
+#     # Print the output in JSON format
+#     return output_text
 
 
 def remove_words_after_specific_word(string, specific_word):
@@ -122,14 +122,14 @@ class BaseEditor:
         return {
             "id": current_example_index,
             "raw_message": current_example["raw_message"],
-            "Output": get_gpt_output(
-                current_example["raw_message"],
-                api,
-                model_engine,
-                temperature,
-                max_tokens,
-                prompt,
-            ),
+            # "Output": get_gpt_output(
+            #     current_example["raw_message"],
+            #     api,
+            #     model_engine,
+            #     temperature,
+            #     max_tokens,
+            #     prompt,
+            # ),
         }
 
     def save_unlabelled_example(self, example_id, text):
@@ -178,7 +178,7 @@ def get_app(ntagger):
         return jsonify(
             {
                 "output1": example["raw_message"],
-                "output2": example["Output"],
+                # "output2": example["Output"],
                 "output3": str(example["id"]),
             }
         )
