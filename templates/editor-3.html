@@ -83,6 +83,7 @@
       <button onclick="handleClick4()">Save Row</button>
       <button onclick="handleClick2()">Save Example</button>
       <button onclick="handleClick3()">Save Data</button>
+      <button onclick="handleClick5()">Clear Data</button>
     </div><br>
 
   <script>
@@ -97,6 +98,20 @@
                           // textbox2.value = JSON.stringify(message.output2, null, 3);
                           textbox3.value = message.output3;
                     })
+            }
+    
+        function handleClick5() {
+                document.getElementById('commodity').value = '';
+                document.getElementById('variety').value = '';
+                document.getElementById('location').value = '';
+                document.getElementById('buyer').value = '';
+                document.getElementById('price').value = '';
+                document.getElementById('quantity').value = '';
+                document.getElementById('labour').value = '';
+                document.getElementById('BardanaDeduction').value = '';
+                document.getElementById('CashDiscount').value = '';
+                document.getElementById('PaymentDays').value = '';
+                document.getElementById('DeliveryDays').value = '';
             }
     
 		function handleClick2() {
@@ -116,6 +131,17 @@
           textbox4.value = "";
           textbox5.value = "";
           textbox.value = "";
+          document.getElementById('commodity').value = '';
+          document.getElementById('variety').value = '';
+          document.getElementById('location').value = '';
+          document.getElementById('buyer').value = '';
+          document.getElementById('price').value = '';
+          document.getElementById('quantity').value = '';
+          document.getElementById('labour').value = '';
+          document.getElementById('BardanaDeduction').value = '';
+          document.getElementById('CashDiscount').value = '';
+          document.getElementById('PaymentDays').value = '';
+          document.getElementById('DeliveryDays').value = '';
         }
       });
 		}
