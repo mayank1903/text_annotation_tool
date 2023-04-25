@@ -42,8 +42,10 @@
     <div class="centered">
 <!--       change it later if the number or name of button changes -->
       <button id="labourb" onclick="highlightText('labour')">Labour</button>
-      <button id="BardanaDeductionb" onclick="highlightText('BardanaDeduction')">BardanaDeduction</button>
-      <button id="CashDiscountb" onclick="highlightText('CashDiscount')">CashDiscount</button>
+      <button id="BardanaDeductionb" onclick="highlightText('BardanaDeduction')">Bardana Deduction</button>
+      <button id="CashDiscountb" onclick="highlightText('CashDiscount')">Cash Discount</button>
+      <button id="PaymentDaysb" onclick="highlightText('PaymentDays')">Payment Days</button>
+      <button id="DeliveryDaysb" onclick="highlightText('DeliveryDays')">Delivery Days</button>
     </div><br>
 
     <div style="display:flex; flex-direction:row; justify-content:center;">
@@ -59,7 +61,7 @@
     </div><br>
   
     <div class="centered">
-      <input type="text" size="20" id="idbox" class="center" placeholder="index" readonly>
+      <input type="text" size="15" id="idbox" class="center" placeholder="index" readonly>
     </div><br>
   
     <div class="centered">
@@ -70,8 +72,10 @@
       <h5 style="color:black;">Quality Parameters</h5>
 <!--       change this if the name and the number of button changes -->
       <input type='text' id='labour' placeholder="labour">
-      <input type='text' id='BardanaDeduction' placeholder="BardanaDeduction">
-      <input type='text' id='CashDiscount' placeholder="CashDiscount">
+      <input type='text' id='BardanaDeduction' placeholder="Bardana Deduction">
+      <input type='text' id='CashDiscount' placeholder="Cash Discount">
+      <input type='text' id='PaymentDays' placeholder="Payment Days">
+      <input type='text' id='DeliveryDays' placeholder="Delivery Days">
     </div><br>
   
     <div class="centered">
@@ -127,6 +131,8 @@
                 let inputValue7 = document.getElementById("labour").value;
                 let inputValue8 = document.getElementById("BardanaDeduction").value;
                 let inputValue9 = document.getElementById("CashDiscount").value;
+                let inputValue10 = document.getElementById("PaymentDays").value;
+                let inputValue11 = document.getElementById("DeliveryDays").value;
           
                 // change this if the name and the number of text box/ button changes
                 let data = {
@@ -136,9 +142,11 @@
                       "buyer": inputValue4,
                       "price": inputValue5,
                       "quantity": inputValue6,
-                      "labour": inputValue6,
-                      "BardanaDeduction": inputValue6,
-                      "CashDiscount": inputValue6
+                      "labour": inputValue7,
+                      "Bardana Deduction": inputValue8,
+                      "Cash Discount": inputValue9,
+                      "Payment Days": inputValue10,
+                      "Delivery Days": inputValue11
                     };
                 fetch('/save_row',{
                 method: 'POST',
